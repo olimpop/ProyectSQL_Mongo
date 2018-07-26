@@ -11,19 +11,16 @@ import javax.swing.JOptionPane;
  * @author Jair Parra
  */
 public class MenuPrincipal {
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
         Connection miConexion;
-        miConexion=ConexionDB.GetConnection();       
-     
+        miConexion=ConexionDB.GetConnection();            
         if(miConexion!=null)
         {
             JOptionPane.showMessageDialog(null, "Proceso Terminado");            
         }
     }
-    
 }

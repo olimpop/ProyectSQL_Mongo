@@ -54,17 +54,16 @@ public class ConexionDB {
         byte[] fileBytes;
         try {
             System.out.println("Conexion Realizada con la base de datos SQL SERVER 2012 ");
+            //Conexion con la base de datos de Sql server 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String url = "jdbc:sqlserver://PCJ;databaseName=prueba;user=sa;password=123456;";// 
             conexion = DriverManager.getConnection(url);
             Statement sentencia = conexion.createStatement();
-//            ResultSet rs = sentencia.executeQuery(" select * from documentos order by 1");
             ResultSet rs = sentencia.executeQuery("SELECT nit,primerapellido,segundoapellido,nombres,direccion,telefono1 FROM dbo.nits order by 1");
-
+            // Configuracion de conexion con mongodb
             mongo = new Mongo("localhost", 27017);
-            db = mongo.getDB("Docma");
-            DBCollection coleccion = db.getCollection("Persona");         
-            
+            db = mongo.getDB("Datos");
+            DBCollection coleccion = db.getCollection("Persona");            
             while (rs.next()) {
                 Persona p = new Persona(rs.getInt("nit"),rs.getString("primerapellido"),rs.getString("segundoapellido"),rs.getString("nombres"),rs.getString("direccion"),rs.getString("telefono1"));
                 System.out.println(rs.getInt("nit"));
@@ -96,7 +95,7 @@ public class ConexionDB {
                  gfsFile.save();
                  */
 //                RECUPERAR LA INFORMACION DE MONGO Y GUARDARLA EN DIRECTORIO
- /*   
+                /*   
                  System.out.println("RECUPERAR LA INFORMACION DE MONGO Y GUARDARLA EN DIRECTORIO");                
                  GridFSDBFile iOSolicitud = gfsPhotoExtraer.findOne(rs.getBigDecimal("docId").toString());
                  iOSolicitud.writeTo("C://data//mongo//" + rs.getBigDecimal("docId") + "_Mongodb_" + rs.getString("nombre"));
